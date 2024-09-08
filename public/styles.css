@@ -198,16 +198,43 @@ border: 1px solid rgba(255, 255, 255, 0.3);
     margin: 20px 0;
 }
 
-.social-icons a{
-    border: 1px solid #dddddd;
-    border-radius: 20%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 3px;
-    width: 40px;
-    height: 40px;
-}
+
+    .social-icons {
+        display: flex;             
+        gap: 20px;                
+        align-items: center;       
+    }
+    
+    .icon {
+        border: 1px solid #dddddd; 
+        border-radius: 20%;       
+        display: inline-flex;     
+        justify-content: center;  
+        align-items: center;       
+        width: 100px;             
+        height: 40px;             
+        text-decoration: none;    
+        color: #333;              
+        background-color: #d2a253;
+        margin: 0 3px;             
+        font-size: 14px;         
+        transition: all 0.3s ease; 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    }
+    
+    .icon i {
+        margin-right: 8px;         
+        font-size: 18px;          
+    }
+    
+    .icon:hover {
+        background-color: #eeeeee;
+        border-color: #cccccc;    
+        color: #000;               
+        transform: scale(1.05);   
+    }
+    
+
 
 .toggle-container{
     

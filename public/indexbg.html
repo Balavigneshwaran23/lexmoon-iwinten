@@ -34,16 +34,16 @@
                 <form id="signupForm" class="form" action="/sign_up" method="POST">
                     <h1>Create Account</h1>
                     <div class="social-icons">
-                        <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                        <a href="/auth/google" class="icon"><i class="fa-brands fa-google-plus-g"></i> sign in with Google</a>
                         <!-- <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a> -->
-                        <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                        <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="/auth/github" class="icon"><i class="fa-brands fa-github"></i> sign in with Github</a>
+                        <!-- <a href="/auth/linkedin"class="icon"><i class="fa-brands fa-linkedin-in"></i></a> -->
                     </div>
                     <span>or use your email for registeration</span>
-                    <input onclick="toggleZoom()"  type="text"  id="name"  name="name" placeholder="Name">
+                    <input   type="text"  id="name"  name="name" placeholder="Name">
                     <input type="email" id="email"  name="email" placeholder="Email">
                     <input type="password" id="password"  name="password" placeholder="Password">
-                    <button type="submit" id="register1" onclick="toggleZoom()"  >Sign Up</button>
+                    <button type="submit" id="register1"  >Sign Up</button>
                     <div class="two-col">
                         <div class="two">
                             <label><a href="policy.html">Privacy Policy</a></label>
@@ -59,17 +59,17 @@
                 <form id="loginForm" class="form" action="/login" method="POST">
                     <h1>Sign In</h1>
                     <div class="social-icons">
-                        <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                        <a href="/auth/google" class="icon"><i class="fa-brands fa-google-plus-g"></i> sign in with Google</a>
                         <!-- <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a> -->
-                        <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                        <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="/auth/github" class="icon"><i class="fa-brands fa-github"></i>sign in with Github</a>
+                        <!-- <a href="/auth/linkedin" class="icon"><i class="fa-brands fa-linkedin-in"></i></a> -->
                     </div>
                     <span>or use your email password</span>
-                    <input onclick="toggleZoom()"  type="email" id="loginEmail" name="email" placeholder="Email" required>
+                    <input  type="email" id="loginEmail" name="email" placeholder="Email" required>
                     <input  type="password" id="loginPassword" name="password" placeholder="Password">
                     <a href="forgetpassword.html">Forget Your Password?</a>
                     <!-- <button>Sign In</button> -->
-                    <button  type="submit" onclick="toggleZoom()"  >Sign In</button>
+                    <button  type="submit"   >Sign In</button>
                    
                 </form>
             </div> <!-- form-container sign-in -->
@@ -102,7 +102,7 @@
             <header>Login</header>
         </div>
         <div class="input-box23">
-            <input  onclick="toggleZoom()" type="text" class="input-field23" id="email" name="email" placeholder=" Email">
+            <input   type="text" class="input-field23" id="email" name="email" placeholder=" Email">
             <i class="bx bx-user"></i>
         </div>
         <div class="input-box23">
@@ -110,7 +110,7 @@
             <i class="bx bx-lock-alt"></i>
         </div>
         <div class="input-box23">
-            <button class="submit23" onclick="toggleZoom()">Sign In</button>
+            <button class="submit23" >Sign In</button>
         </div>
         <div class="two-col23">
             <div class="one23">
@@ -132,7 +132,7 @@
         </div>
         <div class="two-forms23">
             <div class="input-box23">
-                <input onclick="toggleZoom()" type="text" class="input-field23" id="signupName23" name="name"  placeholder="Name">
+                <input  type="text" class="input-field23" id="signupName23" name="name"  placeholder="Name">
                 <i class="bx bx-user"></i>
             </div>
         </div>
