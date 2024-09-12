@@ -7,18 +7,17 @@ const notifier = require("node-notifier");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const GitHubStrategy = require("passport-github2").Strategy;
+const OAuth2Strategy = require('passport-oauth2').Strategy;
 const session = require("express-session");
 const dotenv = require("dotenv");
 const path = require("path");
 const { ensureLoggedIn } = require('connect-ensure-login');
 
-// Load environment variables
 dotenv.config();
 
 const app = express();
 const TOKEN_EXPIRATION = 3600000; // Token expiration time in milliseconds (1 hour)
 
-// Middleware
 app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,12 +29,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("Connected to Database"))
     .catch(err => console.error("Error in Connecting to Database:", err));
 
-// User Schema
 const userSchema = new mongoose.Schema({
     name: String,
     email: String,
@@ -43,19 +40,23 @@ const userSchema = new mongoose.Schema({
     resetToken: String,
     resetTokenExpiry: Date,
     googleId: String,
-    githubId: String
+    githubId: String,
+    godaddyId: String
 });
 
 const User = mongoose.model('User', userSchema);
 
-// Passport.js Configuration
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
-    const user = await User.findById(id);
-    done(null, user);
+    try {
+        const user = await User.findById(id);
+        done(null, user);
+    } catch (err) {
+        done(err, null);
+    }
 });
 
 passport.use(new GoogleStrategy({
@@ -63,16 +64,22 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "/auth/google/callback"
 }, async (accessToken, refreshToken, profile, done) => {
-    let user = await User.findOne({ googleId: profile.id });
-    if (!user) {
-        user = new User({
-            googleId: profile.id,
-            name: profile.displayName,
-            email: profile.emails[0].value
-        });
-        await user.save();
+    try {
+        let user = await User.findOne({ googleId: profile.id });
+        if (!user) {
+            const email = (profile.emails && profile.emails.length > 0) ? profile.emails[0].value : 'No email available';
+            user = new User({
+                googleId: profile.id,
+                name: profile.displayName,
+                email
+            });
+            await user.save();
+        }
+        done(null, user);
+    } catch (err) {
+        console.error("Error in Google Strategy:", err);
+        done(err, null);
     }
-    done(null, user);
 }));
 
 passport.use(new GitHubStrategy({
@@ -80,19 +87,55 @@ passport.use(new GitHubStrategy({
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
     callbackURL: "/auth/github/callback"
 }, async (accessToken, refreshToken, profile, done) => {
-    let user = await User.findOne({ githubId: profile.id });
-    if (!user) {
-        user = new User({
-            githubId: profile.id,
-            name: profile.displayName,
-            email: profile.emails[0].value
-        });
-        await user.save();
+    try {
+        let user = await User.findOne({ githubId: profile.id });
+        if (!user) {
+            const email = (profile.emails && profile.emails.length > 0) ? profile.emails[0].value : 'No email available';
+            user = new User({
+                githubId: profile.id,
+                name: profile.displayName,
+                email
+            });
+            await user.save();
+        }
+        done(null, user);
+    } catch (err) {
+        console.error("Error in GitHub Strategy:", err);
+        done(err, null);
     }
-    done(null, user);
 }));
 
-// Authentication Middleware
+passport.use('godaddy', new OAuth2Strategy({
+    authorizationURL: 'https://api.godaddy.com/v1/oauth2/authorize',
+    tokenURL: 'https://api.godaddy.com/v1/oauth2/token',
+    clientID: process.env.GODADDY_CLIENT_ID,
+    clientSecret: process.env.GODADDY_CLIENT_SECRET,
+    callbackURL: '/auth/godaddy/callback'
+  },
+  async (accessToken, refreshToken, profile, done) => {
+    try {
+        // Fetch user profile from GoDaddy API using accessToken
+        // GoDaddy's specific API endpoint to fetch user details would go here
+
+        // Example: Fetch user information
+        // const userProfile = await fetchUserProfile(accessToken);
+
+        let user = await User.findOne({ godaddyId: profile.id });
+        if (!user) {
+            user = new User({
+                godaddyId: profile.id,
+                name: profile.displayName,
+                email: profile.email // Adjust based on GoDaddy profile response
+            });
+            await user.save();
+        }
+        done(null, user);
+    } catch (err) {
+        console.error("Error in GoDaddy Strategy:", err);
+        done(err, null);
+    }
+}));
+
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
@@ -100,7 +143,6 @@ function ensureAuthenticated(req, res, next) {
     res.redirect('/indexbg.html');
 }
 
-// Routes
 app.post("/sign_up", async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -205,7 +247,7 @@ app.post("/request_password_reset", async (req, res) => {
                 return res.redirect('/Failed_to_send_email.html');
             }
             notifier.notify({
-                title: 'Mail sent',
+                title: 'Mail Sent',
                 message: 'Password reset email sent successfully',
                 sound: true,
             });
@@ -228,11 +270,11 @@ app.post("/reset_password", async (req, res) => {
 
         if (!user) {
             notifier.notify({
-                title: 'Password Reset',
+                title: 'Password Reset Error',
                 message: 'Invalid or expired token',
                 sound: true,
             });
-            return res.redirect('/Password_reset_successfully.html');
+            return res.redirect('/Invalid_or_expired_token.html');
         }
 
         const hashedNewPassword = await bcrypt.hash(newPassword, 10);
@@ -247,7 +289,8 @@ app.post("/reset_password", async (req, res) => {
             message: 'Password reset successfully',
             sound: true,
         });
-        res.send("Password reset successfully");
+        return res.redirect('/Password_reset_successfully.html');
+        // res.send("Password reset successfully");
     } catch (err) {
         console.error("Error in resetting password:", err);
         notifier.notify({
@@ -259,7 +302,6 @@ app.post("/reset_password", async (req, res) => {
     }
 });
 
-// Authentication Routes
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/loginerror.html" }), (req, res) => {
@@ -272,7 +314,12 @@ app.get("/auth/github/callback", passport.authenticate("github", { failureRedire
     res.redirect("/mainpage.html");
 });
 
-// Apply authentication middleware
+app.get('/auth/godaddy', passport.authenticate('godaddy'));
+
+app.get('/auth/godaddy/callback', passport.authenticate('godaddy', { failureRedirect: '/loginerror.html' }), (req, res) => {
+    res.redirect('/mainpage.html');
+});
+
 app.get("/mainpage.html", ensureAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'mainpage.html'));
 });

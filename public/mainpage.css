@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap');
+body {
+   background-color: #000; /* 
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; */
+    overflow: hidden;
+   
+    }
+    *{
+        margin: 0;
+        padding: 0;
+       
+    }
+   
+    .moon { 
+        z-index: -4;
+        top: 350px;
+        left:-20px;
+        width: 100em;
+        height: 90em;
+        background: url(./iwimg/moon.jpg);
+        box-shadow:
+        inset -1.5em -1.5em 1.5em #000, -0.2em -0.2em 0.5em #cab59b;
+        position: absolute;
+        animation: rotate 50s linear infinite;
+    }
+    
+            .moon {
+                border-radius: 50%; 
+                background-repeat: repeat; 
+                background-size: 200% 100%; 
+            }
+                @keyframes rotate {
+                    to{ background-position: -200% 0;}
+                }
+                    @keyframes orbit {
+                    49% { z-index: 1; }
+                    50% {
+                    left: 25em;
+                    z-index: -1;}
+                    99% { z-index: -1; }
+                    100% {
+                    left: -11em;
+                    z-index: 1;
+                    }
+                    }
+/* nav start */
+                    .logo1{
+   
+                        width: 100px; 
+                    }
+
+  
+  nav ul li{
+    display: inline-block;
+    list-style: none;
+    margin: 10px 30px ;
+    
+  }
+  
+  nav ul li a:hover{
+    font-weight: bold; 
+      color: #bbbbbb;
+       text-shadow: 0 0 10px #000000, 
+                   0 0 20px #c2c2c2,
+                   0 0 30px #c2c2c2,
+                   0 0 40px #ffffff,
+                   0 0 50px #ffffff;
+  }
+  nav ul li a::after{
+      content:'';
+      width : 0;
+      height: 3px;
+      background: #d2a253;
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      transition: 0.5s;
+    
+         
+  }
+  nav ul li a:hover::after{
+      width: 100%;
+     
+      
+  }
+  
+  nav ul li a{
+    color:#bbbbbb ;
+      text-decoration: none;
+      font-size: 25px;
+      position: relative;
+     
+      cursor: pointer;
+      position: relative;
+      transition: text-shadow 1s ease;
+    
+  }
+
+  
+                    /* nav ends */
+
+                    /*  */
+                    .pages{
+                        margin-left: 150px;
+                    }
+                   .gap{
+                    gap: 30px;
+                   }
+                   .page1{
+                    width: 600px;
+                    height: 600px;
+                    color: aliceblue;
+                     /* glass */
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(142, 142, 142, 0.69);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(222, 222, 222, 0.938);
+        /* end */
+                   }
+                   
+
+
+                   /*  */
