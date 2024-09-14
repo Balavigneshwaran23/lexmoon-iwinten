@@ -6,18 +6,16 @@ const nodemailer = require("nodemailer");
 const notifier = require("node-notifier");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const GitHubStrategy = require("passport-github2").Strategy;
-const OAuth2Strategy = require('passport-oauth2').Strategy;
 const session = require("express-session");
 const dotenv = require("dotenv");
 const path = require("path");
-const { ensureLoggedIn } = require('connect-ensure-login');
 
 dotenv.config();
 
 const app = express();
 const TOKEN_EXPIRATION = 3600000; // Token expiration time in milliseconds (1 hour)
 
+// Middleware setup
 app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,9 +27,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("Connected to Database"))
     .catch(err => console.error("Error in Connecting to Database:", err));
+
 
 const userSchema = new mongoose.Schema({
     name: String,
@@ -39,12 +39,11 @@ const userSchema = new mongoose.Schema({
     password: String,
     resetToken: String,
     resetTokenExpiry: Date,
-    googleId: String,
-    githubId: String,
-    godaddyId: String
+    googleId: String
 });
 
 const User = mongoose.model('User', userSchema);
+
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -59,6 +58,7 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
+// Google OAuth strategy
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -82,60 +82,7 @@ passport.use(new GoogleStrategy({
     }
 }));
 
-passport.use(new GitHubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "/auth/github/callback"
-}, async (accessToken, refreshToken, profile, done) => {
-    try {
-        let user = await User.findOne({ githubId: profile.id });
-        if (!user) {
-            const email = (profile.emails && profile.emails.length > 0) ? profile.emails[0].value : 'No email available';
-            user = new User({
-                githubId: profile.id,
-                name: profile.displayName,
-                email
-            });
-            await user.save();
-        }
-        done(null, user);
-    } catch (err) {
-        console.error("Error in GitHub Strategy:", err);
-        done(err, null);
-    }
-}));
-
-passport.use('godaddy', new OAuth2Strategy({
-    authorizationURL: 'https://api.godaddy.com/v1/oauth2/authorize',
-    tokenURL: 'https://api.godaddy.com/v1/oauth2/token',
-    clientID: process.env.GODADDY_CLIENT_ID,
-    clientSecret: process.env.GODADDY_CLIENT_SECRET,
-    callbackURL: '/auth/godaddy/callback'
-  },
-  async (accessToken, refreshToken, profile, done) => {
-    try {
-        // Fetch user profile from GoDaddy API using accessToken
-        // GoDaddy's specific API endpoint to fetch user details would go here
-
-        // Example: Fetch user information
-        // const userProfile = await fetchUserProfile(accessToken);
-
-        let user = await User.findOne({ godaddyId: profile.id });
-        if (!user) {
-            user = new User({
-                godaddyId: profile.id,
-                name: profile.displayName,
-                email: profile.email // Adjust based on GoDaddy profile response
-            });
-            await user.save();
-        }
-        done(null, user);
-    } catch (err) {
-        console.error("Error in GoDaddy Strategy:", err);
-        done(err, null);
-    }
-}));
-
+// Middleware to check if the user is authenticated
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
@@ -143,11 +90,26 @@ function ensureAuthenticated(req, res, next) {
     res.redirect('/indexbg.html');
 }
 
+// Route for signup
 app.post("/sign_up", async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 10);
         
+        
+        const existingUser = await User.findOne({ email });
+        
+        if (existingUser) {
+            notifier.notify({
+                title: 'Signup Error',
+                message: 'Email already exists. Please use a different email.',
+                sound: true,
+            });
+            return res.redirect('/indexbg.html'); 
+        }
+
+        
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         const user = new User({
             name,
             email,
@@ -159,10 +121,11 @@ app.post("/sign_up", async (req, res) => {
         return res.redirect('/indexbg.html');
     } catch (err) {
         console.error(err);
-        return res.redirect('/error.html');
+       
     }
 });
 
+// Route for login
 app.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -200,6 +163,7 @@ app.post("/login", async (req, res) => {
     }
 });
 
+// Route to request a password reset
 app.post("/request_password_reset", async (req, res) => {
     try {
         const { email } = req.body;
@@ -259,6 +223,7 @@ app.post("/request_password_reset", async (req, res) => {
     }
 });
 
+// Route to reset the password
 app.post("/reset_password", async (req, res) => {
     try {
         const { token, newPassword } = req.body;
@@ -302,27 +267,18 @@ app.post("/reset_password", async (req, res) => {
     }
 });
 
+// Route for Google OAuth
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/loginerror.html" }), (req, res) => {
     res.redirect("/mainpage.html");
 });
 
-app.get("/auth/github", passport.authenticate("github", { scope: ["user:email"] }));
-
-app.get("/auth/github/callback", passport.authenticate("github", { failureRedirect: "/loginerror.html" }), (req, res) => {
-    res.redirect("/mainpage.html");
-});
-
-app.get('/auth/godaddy', passport.authenticate('godaddy'));
-
-app.get('/auth/godaddy/callback', passport.authenticate('godaddy', { failureRedirect: '/loginerror.html' }), (req, res) => {
-    res.redirect('/mainpage.html');
-});
 
 app.get("/mainpage.html", ensureAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'mainpage.html'));
+    res.sendFile(path.join(__dirname, 'public', 'indexbg.html'));
 });
+
 
 app.get("/indexbg.html", (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'indexbg.html'));
@@ -332,10 +288,12 @@ app.get("/", (req, res) => {
     res.redirect('/indexbg.html');
 });
 
+
 app.listen(3000, () => {
     console.log("Listening on PORT 3000");
 });
 
+// Function to generate a random token for password reset
 function generateRandomToken() {
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let token = '';
