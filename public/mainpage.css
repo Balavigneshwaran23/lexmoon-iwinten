@@ -7,11 +7,14 @@ body {
     justify-content: center;
     align-items: center; */
     overflow: hidden;
+    /* align-items: center;
+    justify-content: center; */
+    
    
     }
     *{
         margin: 0;
-        padding: 0;
+        padding: 0; 
        
     }
    
@@ -104,26 +107,291 @@ body {
                     /* nav ends */
 
                     /*  */
-                    .pages{
+                    /* .pages{
                         margin-left: 150px;
-                    }
-                   .gap{
-                    gap: 30px;
-                   }
-                   .page1{
-                    width: 600px;
-                    height: 600px;
-                    color: aliceblue;
-                     /* glass */
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(142, 142, 142, 0.69);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(222, 222, 222, 0.938);
-        /* end */
-                   }
+                    } */
+                   
+                   
                    
 
 
-                   /*  */
+                   /* tab1&2 */
+/* :root {
+  --primary-color: #356aff;
+ --background:#fff ;
+  --light-bg-color: #000000;
+  --text-color: #ffffff;
+  --light-text-color: #cdccd1;
+  --primary-text-color: #fff;
+} */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    border-radius: 30px;
+    background: #cdccd1;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 30px;
+    background: #d2a253;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #d2a253;
+  }
+  
+ 
+  
+  
+  .pages {
+    position: relative;
+    width: 1200px;
+    padding: 0 20px;
+    display: flex;
+    gap: 10px;
+   
+  }
+  .pages .card {
+    z-index: 0;
+    flex: 1;
+    padding: 30px;
+    border-radius: 20px;
+    /* background-color: var(--light-bg-color); */
+    backdrop-filter: blur(10px); /* Adds the glass effect */
+    background-color: rgba(255, 255, 255, 0.1); /* Transparent background */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border for glass feel */
+    border-radius: 20px;
+  }
+  .pages .card .from,
+  .pages .card .to {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .pages .card .from {
+    margin-right: 20px;
+  }
+  .pages .card .to {
+    margin-left: 20px;
+  }
+  .pages .card .heading {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+  }
+  .dropdown-container {
+    position: relative;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  .dropdown-container .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-radius: 30px;
+    background-color: #cdccd1;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .dropdown-container .dropdown-toggle span {
+    flex: 1;
+    margin-left: 10px;
+  }
+  .dropdown-container .dropdown-toggle ion-icon {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+  }
+  .dropdown-container.active .dropdown-toggle {
+    border-radius: 20px 20px 0 0;
+  }
+  .dropdown-container.active .dropdown-toggle ion-icon:last-child {
+    transform: rotate(180deg);
+  }
+  .dropdown-container .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    overflow: auto;
+    display: none;
+    padding: 20px;
+    z-index: 1;
+    list-style: none;
+    flex-direction: column;
+    background-color: #cdccd1;
+    transition: all 1s;
+    border-radius: 0 0 20px 20px;
+  }
+  .dropdown-container .dropdown-menu::-webkit-scrollbar {
+    display: none;
+  }
+  .dropdown-container.active .dropdown-menu {
+    display: flex;
+  }
+  
+  .dropdown-container .dropdown-menu li {
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #cdccd1;
+    transition: all 0.3s ease;
+  }
+  .dropdown-container .dropdown-menu li:hover {
+    background-color: #d2a253;
+  }
+  .dropdown-container .dropdown-menu li.active {
+    color: #fff;
+    background-color:blue;
+  }
+  .pages .text-area {
+    position: relative;
+  }
+  .pages textarea {
+    width: 100%;
+    padding: 20px;
+    margin: 10px 0;
+    background-color: transparent;
+    resize: none;
+    outline: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    font-family: "Poppins", sans-serif;
+  }
+  .pages .text-area .chars {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    font-size: 0.8rem;
+    color: #ffffff;
+  }
+  .pages .center {
+    z-index: 1;
+    position: relative;
+    
+  }
+  .swap-position {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 5px solid #356aff;
+    transition: all 0.3s ease;
+    color: #fff;
+    background-color: blue;
+  }
+  .swap-position ion-icon {
+    font-size: 25px;
+  }
+  .swap-position:hover {
+    transform: translateX(-50%) scale(1.1);
+  }
+  .card-bottom {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 20px;
+    border-top: 2px solid rgba(185, 185, 185, 0.833);
+  }
+  .card-bottom p {
+    margin-bottom: 20px;
+    color: #cdccd1;
+  }
+  .card-bottom label {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 20px;
+    cursor: pointer;
+    border-radius: 30px;
+    background-color: #fff;
+  }
+  .card-bottom label:hover {
+    color: #fff;
+    background-color: blue;
+  }
+  .card-bottom span {
+    font-size: 12px;
+    pointer-events: none;
+  }
+  .card-bottom ion-icon {
+    font-size: 20px;
+  }
+  
+  .card-bottom button {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 20px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    color: #fff;
+    cursor: pointer;
+    background-color: #f8c953;
+  }
+  .card-bottom button:hover {
+    color:#d2a253 ;
+    background-color: #ffffff;
+  }
+  
+  
+  
+  
+  
+  
+  
+  /* media quiries */
+  @media (max-width: 800px) {
+    .pages {
+      width: 100%;
+      margin-top: 20px;
+      flex-direction: column;
+    }
+    .pages .card {
+      width: 100%;
+    }
+    .pages .card .from {
+      margin-right: 0;
+    }
+    .pages .card .to {
+      margin-left: 0;
+    }
+    .pages .card .from,
+    .pages .card .to {
+      flex-direction: column;
+    }
+  
+    .swap-position {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .swap-position:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    .swap-position ion-icon {
+      transform: rotate(90deg);
+    }
+  }
+  
+
+  /* home end  */
+
+
+
+  /* about */
