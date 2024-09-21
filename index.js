@@ -155,7 +155,7 @@ app.post("/login", async (req, res) => {
                 console.error(err);
                 return res.redirect('/loginerror.html');
             }
-            return res.redirect('http://localhost:8502/');
+            return res.redirect('https://lexmoon.onrender.com/#home');
         });
     } catch (err) {
         console.error(err);
@@ -271,11 +271,11 @@ app.post("/reset_password", async (req, res) => {
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/loginerror.html" }), (req, res) => {
-    res.redirect("http://localhost:8502/");
+    res.redirect("https://lexmoon.onrender.com/#home");
 });
 
 
-app.get("http://localhost:8502/", ensureAuthenticated, (req, res) => {
+app.get("https://lexmoon.onrender.com/#home", ensureAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'indexbg.html'));
 });
 
