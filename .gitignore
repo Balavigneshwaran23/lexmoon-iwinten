@@ -1,9 +1,16 @@
 node_modules/
 .env
-.20240917_222343 (1).png
-.20240917_222343-min.png
-.20240917_222343.png
-.moon.png
-.genuine-segment-413110-e0f55dfd224e.json
+# .20240917_222343 (1).png
+# .20240917_222343-min.png
+# .20240917_222343.png
+# .moon.png
+# .genuine-segment-413110-e0f55dfd224e.json
 .iwimg
 .venv
+*.json
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.svg
