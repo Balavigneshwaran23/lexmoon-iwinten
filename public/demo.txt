@@ -1,0 +1,31 @@
+Case: Web Application Penetration testing for SQL Injection and Cross-Site Scripting Vulnerabilities
+
+Petition: Project Report by Balavigneshwaran P
+
+Facts:
+- The target was the web application: http://testphp.vulnweb.com/login.php
+- Tools used: XSSer, Wireshark, and SQLMap.
+- Web Application Penetration Testing was conducted to identify SQL injection and Cross-site scripting (XSS) vulnerabilities.
+- Detailed exploration of types of SQL Injection (SQLi) and XSS.
+- Identified and exploited vulnerabilities using the mentioned tools, and analyzed captured packets with Wireshark.
+- SQLMap was employed to automatically identify SQL injection vulnerabilities, retrieving databases named acuart and information_schema.
+- XSS vulnerabilities were tested using the XSSer tool, accessing its GUI via the `xsser –gtk` command.
+
+Issues:
+- Identifying the types of SQL injection (SQLi): In-band (Classic SQLi), Inferential (Blind SQLi), and Out-of-band SQLi.
+- Testing and exploiting SQLi vulnerabilities using SQLMap, leading to the retrieval of sensitive databases.
+- Identifying types of Cross-Site Scripting (XSS) vulnerabilities: Stored XSS, Reflected XSS, and DOM-based XSS.
+- Conducting detailed XSS attacks, analyzing the results.
+- Capturing and analyzing network packets during penetration testing with Wireshark.
+
+Judgements:
+- Detailed step-by-step SQL injection testing using SQLMap resulted in database retrieval despite multiple failed attempts.
+- Successful execution of XSS attacks demonstrated vulnerabilities, evidenced by screenshots showing the outcomes of these attacks.
+
+Judge’s Observations:
+- The project effectively demonstrated identifying and exploiting web application vulnerabilities.
+- SQLMap, XSSer, and Wireshark proved to be effective tools in the penetration testing process.
+- Packet analysis through Wireshark highlighted the sensitivity of transmitted data during the attack.
+
+Final Judgement (Conclusion):
+The Target Website http://testphp.vulnweb.com/login.php was subjected to SQL injection, resulting in the retrieval of sensitive databases. A Cross-Site Scripting (XSS) attack was successfully executed. The Wireshark tool was employed to capture and analyze network packets, substantiating the penetration testing efforts.
