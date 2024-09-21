@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap');
+body {
+   background-color: #000; /* 
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; */
+    /* overflow: hidden; */
+    /* align-items: center;
+    justify-content: center; */
+    overflow-x: hidden;
+    
+   
+    }
+    *{
+        margin: 0;
+        padding: 0; 
+       
+    }
+   
+    
+    .moon {
+        
+        z-index: -4;
+        top: 300px;
+        left: -20px;
+        width: 100em;
+        height: 90em;
+        background: url(./iwimg/moon.jpg);
+        box-shadow:
+        inset -1.5em -1.5em 1.5em #000, -0.2em -0.2em 0.5em #44392b;
+        position: fixed;
+        animation: rotate 50s linear infinite;
+        border-radius: 50%; 
+        background-repeat: repeat; 
+        background-size: 200% 100%; 
+    }
+    
+    @keyframes rotate {
+        to { background-position: -200% 0; }
+    }
+    
+    @keyframes orbit {
+        49% { z-index: 1; }
+        50% {
+            left: 25em;
+            z-index: -1;
+        }
+        99% { z-index: -1; }
+        100% {
+            left: -11em;
+            z-index: 1;
+        }
+    }
+    
+
+    /* nav start */
+    .logo1{
+   
+      width: 100px; 
+  }
+  h1{
+    font-family: DM;
+  }
+
+
+nav ul li{
+display: inline-block;
+list-style: none;
+margin: 10px 30px ;
+
+}
+
+nav ul li a:hover{
+font-weight: bold; 
+color: #bbbbbb;
+text-shadow: 0 0 10px #000000, 
+ 0 0 20px #c2c2c2,
+ 0 0 30px #c2c2c2,
+ 0 0 40px #ffffff,
+ 0 0 50px #ffffff;
+}
+nav ul li a::after{
+content:'';
+width : 0;
+height: 3px;
+background: #d2a253;
+position: absolute;
+left: 0;
+bottom: -6px;
+transition: 0.5s;
+
+
+}
+nav ul li a:hover::after{
+width: 100%;
+
+
+}
+
+nav ul li a{
+color:#bbbbbb ;
+text-decoration: none;
+font-size: 25px;
+position: relative;
+
+cursor: pointer;
+position: relative;
+transition: text-shadow 1s ease;
+
+}
+
+
+
+  /* about */
+.grpimg{
+ max-height: 900px;
+ max-width: 1000px;
+ border-radius: 30px;
+}
+
+.mentorimg{
+  display: flex;
+  margin-left: 500px;
+  
+}
+.foname{
+    color: #ff9d00;
+    font-family: DM;
+    font-weight: bold;
+}
+.posname{
+  color: #ffffff;
+}
+  .about_title{
+   
+    color: #d2a253;
+    font-family: DM;
+  }
+  .aboutglass{
+    /* padding: 30px; */
+    border-radius: 20px;
+    backdrop-filter: blur(10px); 
+    background-color: rgba(40, 34, 34, 0.1); 
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    border-radius: 20px;
+  }
+  p{
+    color: #ffffff;
+  }
+  h2,h3{
+    color: #d2a253;
+  }
+
+  /* about end */
+
+
+  /* contect  */
+
+  
+  /* Title styling */
+  .sub_title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #f8c953; 
+    font-family: DM;
+  }
+  
+  /* Paragraph styling */
+  .col-md-6.mb-4 p {
+    font-size: 1rem;
+    color: #fff8f8; /* Adjust color for better readability */
+    margin-bottom: 10px;
+  }
+  
+  /* Icon styling */
+  .col-md-6.mb-4 .fa-2x {
+    color: #ffffff; 
+  }
+  
+ 
+  .social_icons {
+    display: flex;
+    gap: 10px;
+  }
+  
+ 
+  .social_icons a {
+  
+    transition: color 0.3s ease, transform 0.3s ease; 
+  }
+  
+  .social_icons  .fa-brands:hover {
+    color: #f8c953; /* Change color on hover */
+    transform: scale(1.1); /* Slight zoom effect on hover */
+  }
+  .social_icons  .bx:hover {
+    color: #f8c953; /* Change color on hover */
+    transform: scale(1.1); /* Slight zoom effect on hover */
+  }
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .col-md-6.mb-4 {
+      padding: 15px;
+    }
+    
+    .sub_title {
+      font-size: 1.2rem;
+    }
+    
+    .social_icons {
+      flex-direction: column;
+    }
+  }
+  
+
+
+
+  .fromglass {
+    position: relative;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    border-radius: 15px;
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+  }
+  
+  .fromglass form {
+    background: rgba(255, 255, 255, 0.2); /* Slightly opaque background for the form */
+    padding: 20px;
+    border-radius: 15px;
+  }
+  
+  .form-control {
+    background: rgba(255, 255, 255, 0.63); /* Semi-transparent background for inputs */
+    border: none; /* Remove default border */
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Optional shadow for inputs */
+  }
+  
+  .btn-primary {
+    background-color: #d2a253; /* Adjust as needed */
+    border: none;
+    border-radius: 10px;
+  }
+  
+  .btn-primary:hover {
+    background-color: #8e763a; /* Darker shade on hover */
+  }
+  

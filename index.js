@@ -155,7 +155,7 @@ app.post("/login", async (req, res) => {
                 console.error(err);
                 return res.redirect('/loginerror.html');
             }
-            return res.redirect('/mainpage.html');
+            return res.redirect('http://localhost:8502/');
         });
     } catch (err) {
         console.error(err);
@@ -212,7 +212,7 @@ app.post("/request_password_reset", async (req, res) => {
             }
             notifier.notify({
                 title: 'Mail Sent',
-                message: 'Password reset email sent successfully',
+                message:'Password reset email sent successfully',
                 sound: true,
             });
             // res.send("Password reset email sent");
@@ -271,11 +271,11 @@ app.post("/reset_password", async (req, res) => {
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/loginerror.html" }), (req, res) => {
-    res.redirect("/mainpage.html");
+    res.redirect("http://localhost:8502/");
 });
 
 
-app.get("/mainpage.html", ensureAuthenticated, (req, res) => {
+app.get("http://localhost:8502/", ensureAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'indexbg.html'));
 });
 

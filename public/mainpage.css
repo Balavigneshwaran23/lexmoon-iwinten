@@ -6,9 +6,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center; */
-    overflow: hidden;
+    /* overflow: hidden; */
     /* align-items: center;
     justify-content: center; */
+    overflow: hidden;
     
    
     }
@@ -54,6 +55,9 @@ body {
                     .logo1{
    
                         width: 100px; 
+                    }
+                    h1{
+                      font-family: DM;
                     }
 
   
@@ -104,26 +108,10 @@ body {
   }
 
   
-                    /* nav ends */
-
-                    /*  */
-                    /* .pages{
-                        margin-left: 150px;
-                    } */
-                   
-                   
-                   
 
 
                    /* tab1&2 */
-/* :root {
-  --primary-color: #356aff;
- --background:#fff ;
-  --light-bg-color: #000000;
-  --text-color: #ffffff;
-  --light-text-color: #cdccd1;
-  --primary-text-color: #fff;
-} */
+
 ::-webkit-scrollbar {
     width: 5px;
   }
@@ -155,11 +143,10 @@ body {
     flex: 1;
     padding: 30px;
     border-radius: 20px;
-    /* background-color: var(--light-bg-color); */
-    backdrop-filter: blur(10px); /* Adds the glass effect */
-    background-color: rgba(255, 255, 255, 0.1); /* Transparent background */
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border for glass feel */
+    backdrop-filter: blur(10px); 
+    background-color: rgba(255, 255, 255, 0.1); 
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
     border-radius: 20px;
   }
   .pages .card .from,
@@ -286,10 +273,10 @@ body {
     height: 50px;
     border-radius: 50%;
     cursor: pointer;
-    border: 5px solid #356aff;
+    border: 5px solid #bbbbbb;
     transition: all 0.3s ease;
     color: #fff;
-    background-color: blue;
+    background-color: #f8c953;
   }
   .swap-position ion-icon {
     font-size: 25px;
@@ -307,7 +294,7 @@ body {
   }
   .card-bottom p {
     margin-bottom: 20px;
-    color: #cdccd1;
+    color: #ffffff;
   }
   .card-bottom label {
     height: 50px;
@@ -355,7 +342,7 @@ body {
   
   
   
-  /* media quiries */
+  
   @media (max-width: 800px) {
     .pages {
       width: 100%;
@@ -392,6 +379,3 @@ body {
 
   /* home end  */
 
-
-
-  /* about */

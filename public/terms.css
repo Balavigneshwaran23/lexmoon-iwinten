@@ -64,6 +64,9 @@ html {
     #about:hover {
       box-shadow: 0 0 10px #5d6970, 0 0 20px #d2a253  , 0 0 30px #d2a253  , 0 0 40px #d2a253  , 0 0 50px #d2a253 ,0 0 60px #d2a253 ;
     }
+    p{
+      padding: 0 50px 0 50px;
+    }
   #title1{
     color: #bbbbbb;
     font-size: 70px;
