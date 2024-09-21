@@ -6,7 +6,7 @@ node_modules/
 # .moon.png
 # .genuine-segment-413110-e0f55dfd224e.json
 .iwimg
-.venv
+.venv/
 *.json
 *.png
 *.jpg
