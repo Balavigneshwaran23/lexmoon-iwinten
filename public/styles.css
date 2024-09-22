@@ -521,7 +521,7 @@ header{
 .submit23{
     font-size: 15px;
     font-weight: 500;
-    color: black;
+    color: rgb(255, 255, 255);
     height: 45px;
     width: 100%;
     border: none;
@@ -554,7 +554,24 @@ header{
     text-decoration: underline;
     color: #d2a253;
 }
-
+.social-icons2{
+    color: #eeeeee;
+    display: flex;              
+    justify-content: center;      
+    align-items: center;          
+    flex-wrap: wrap;              
+    width: 100%;               
+    
+   }
+.mini{
+    color: #eee;
+    display: flex;              
+    justify-content: center;      
+    align-items: center;          
+               
+                
+    padding: 10px; 
+}
 
 @media only screen and (max-width: 815px) {
     .mainlogin{
