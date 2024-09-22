@@ -32,7 +32,7 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("Connected to Database"))
     .catch(err => console.error("Error in Connecting to Database:", err));
 
-
+// User Schema
 const userSchema = new mongoose.Schema({
     name: String,
     email: String,
@@ -43,7 +43,6 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model('User', userSchema);
-
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -87,7 +86,22 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/indexbg.html');
+    res.redirect('/indexbg.html'); 
+}
+
+// Middleware to check if the user is signed up
+async function checkUserEmail(req, res, next) {
+    const { email } = req.body; // Assuming email is sent in the request body
+
+    if (email) {
+        const user = await User.findOne({ email });
+        if (user) {
+            // Redirect to home if the user exists
+            return res.redirect('https://lexmoon.onrender.com/#home');
+        }
+    }
+    // Continue to the requested page if no user is found
+    next();
 }
 
 // Route for signup
@@ -95,9 +109,7 @@ app.post("/sign_up", async (req, res) => {
     try {
         const { name, email, password } = req.body;
         
-        
         const existingUser = await User.findOne({ email });
-        
         if (existingUser) {
             notifier.notify({
                 title: 'Signup Error',
@@ -107,21 +119,13 @@ app.post("/sign_up", async (req, res) => {
             return res.redirect('/indexbg.html'); 
         }
 
-        
         const hashedPassword = await bcrypt.hash(password, 10);
-
-        const user = new User({
-            name,
-            email,
-            password: hashedPassword
-        });
-
+        const user = new User({ name, email, password: hashedPassword });
         await user.save();
         console.log("Record Inserted Successfully");
-        return res.redirect('/indexbg.html');
+        return res.redirect('https://lexmoon.onrender.com/#home'); 
     } catch (err) {
         console.error(err);
-       
     }
 });
 
@@ -155,7 +159,7 @@ app.post("/login", async (req, res) => {
                 console.error(err);
                 return res.redirect('/loginerror.html');
             }
-            return res.redirect('https://lexmoon.onrender.com/#home');
+            return res.redirect('https://lexmoon.onrender.com/#home'); 
         });
     } catch (err) {
         console.error(err);
@@ -212,10 +216,9 @@ app.post("/request_password_reset", async (req, res) => {
             }
             notifier.notify({
                 title: 'Mail Sent',
-                message:'Password reset email sent successfully',
+                message: 'Password reset email sent successfully',
                 sound: true,
             });
-            // res.send("Password reset email sent");
         });
     } catch (err) {
         console.error("Error in requesting password reset:", err);
@@ -255,7 +258,6 @@ app.post("/reset_password", async (req, res) => {
             sound: true,
         });
         return res.redirect('/Password_reset_successfully.html');
-        // res.send("Password reset successfully");
     } catch (err) {
         console.error("Error in resetting password:", err);
         notifier.notify({
@@ -274,21 +276,17 @@ app.get("/auth/google/callback", passport.authenticate("google", { failureRedire
     res.redirect("https://lexmoon.onrender.com/#home");
 });
 
-
-app.get("https://lexmoon.onrender.com/#home", ensureAuthenticated, (req, res) => {
+// Route for accessing the index page with email check
+app.get("/indexbg.html", checkUserEmail, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'indexbg.html'));
 });
 
-
-app.get("/indexbg.html", (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'indexbg.html'));
-});
-
+// Redirect to index page
 app.get("/", (req, res) => {
     res.redirect('/indexbg.html');
 });
 
-
+// Start the server
 app.listen(3000, () => {
     console.log("Listening on PORT 3000");
 });
