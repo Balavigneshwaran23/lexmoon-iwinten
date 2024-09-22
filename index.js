@@ -118,7 +118,7 @@ app.post("/sign_up", async (req, res) => {
 
         await user.save();
         console.log("Record Inserted Successfully");
-        return res.redirect('/indexbg.html');
+        return res.redirect('https://lexmoon.onrender.com');
     } catch (err) {
         console.error(err);
        
@@ -328,5 +328,5 @@ async function checkUserEmail(req, res) {
 
 app.get("/indexbg.html", checkUserEmail, (req, res) => {
    
-    return res.redirect('https://lexmoon.onrender.com');
+     return res.redirect('https://lexmoon.onrender.com');
 });
