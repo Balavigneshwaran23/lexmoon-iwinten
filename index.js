@@ -118,7 +118,7 @@ app.post("/sign_up", async (req, res) => {
 
         await user.save();
         console.log("Record Inserted Successfully");
-        return res.redirect('https://lexmoon.onrender.com/#home');
+        return res.redirect('https://lexmoonai.streamlit.app/');
     } catch (err) {
         console.error(err);
        
@@ -155,7 +155,7 @@ app.post("/login", async (req, res) => {
                 console.error(err);
                 return res.redirect('/loginerror.html');
             }
-            return res.redirect('https://lexmoon.onrender.com/#home');
+            return res.redirect('https://lexmoonai.streamlit.app/');
         });
     } catch (err) {
         console.error(err);
@@ -271,11 +271,11 @@ app.post("/reset_password", async (req, res) => {
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/loginerror.html" }), (req, res) => {
-    res.redirect("https://lexmoon.onrender.com/#home");
+    res.redirect("https://lexmoonai.streamlit.app/");
 });
 
 
-app.get("https://lexmoon.onrender.com/#home", ensureAuthenticated, (req, res) => {
+app.get("https://lexmoonai.streamlit.app/", ensureAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'indexbg.html'));
 });
 
@@ -314,7 +314,7 @@ async function checkUserEmail(req, res) {
 
             if (user) {
                
-                return res.redirect('https://lexmoon.onrender.com/#home');
+                return res.redirect('https://lexmoonai.streamlit.app/');
             } else {
            
                 return res.redirect('/indexbg.html');
