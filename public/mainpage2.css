@@ -212,14 +212,14 @@ transition: text-shadow 1s ease;
     font-family: DM;
   }
   
-  /* Paragraph styling */
+
   .col-md-6.mb-4 p {
     font-size: 1rem;
-    color: #fff8f8; /* Adjust color for better readability */
+    color: #fff8f8;
     margin-bottom: 10px;
   }
   
-  /* Icon styling */
+ 
   .col-md-6.mb-4 .fa-2x {
     color: #ffffff; 
   }
@@ -235,16 +235,20 @@ transition: text-shadow 1s ease;
   
     transition: color 0.3s ease, transform 0.3s ease; 
   }
+
+  .fa-envelope{
+    margin-right: 10px;
+  }
   
   .social_icons  .fa-brands:hover {
-    color: #f8c953; /* Change color on hover */
-    transform: scale(1.1); /* Slight zoom effect on hover */
+    color: #f8c953; 
+    transform: scale(1.1); 
   }
   .social_icons  .bx:hover {
-    color: #f8c953; /* Change color on hover */
-    transform: scale(1.1); /* Slight zoom effect on hover */
+    color: #f8c953;
+    transform: scale(1.1); 
   }
-  /* Responsive Design */
+
   @media (max-width: 768px) {
     .col-md-6.mb-4 {
       padding: 15px;
@@ -265,32 +269,32 @@ transition: text-shadow 1s ease;
   .fromglass {
     position: relative;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    background: rgba(255, 255, 255, 0.1); 
     border-radius: 15px;
-    backdrop-filter: blur(10px); /* Frosted glass effect */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+    backdrop-filter: blur(10px); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
   }
   
   .fromglass form {
-    background: rgba(255, 255, 255, 0.2); /* Slightly opaque background for the form */
+    background: rgba(255, 255, 255, 0.2); 
     padding: 20px;
     border-radius: 15px;
   }
   
   .form-control {
-    background: rgba(255, 255, 255, 0.63); /* Semi-transparent background for inputs */
-    border: none; /* Remove default border */
+    background: rgba(255, 255, 255, 0.63); 
+    border: none; 
     border-radius: 10px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Optional shadow for inputs */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); 
   }
   
   .btn-primary {
-    background-color: #d2a253; /* Adjust as needed */
+    background-color: #d2a253; 
     border: none;
     border-radius: 10px;
   }
   
   .btn-primary:hover {
-    background-color: #8e763a; /* Darker shade on hover */
+    background-color: #8e763a; 
   }
   
