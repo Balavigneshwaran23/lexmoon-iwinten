@@ -155,7 +155,7 @@ app.post("/login", async (req, res) => {
                 console.error(err);
                 return res.redirect('/loginerror.html');
             }
-            return res.redirect('https://lexmoon.onrender.com/#home');
+            return res.redirect('https://lexmoon.onrender.com');
         });
     } catch (err) {
         console.error(err);
@@ -271,11 +271,11 @@ app.post("/reset_password", async (req, res) => {
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/loginerror.html" }), (req, res) => {
-    res.redirect("https://lexmoon.onrender.com/#home");
+    res.redirect("https://lexmoon.onrender.com");
 });
 
 
-app.get("https://lexmoon.onrender.com/#home", ensureAuthenticated, (req, res) => {
+app.get("https://lexmoon.onrender.com", ensureAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'indexbg.html'));
 });
 
@@ -305,7 +305,7 @@ function generateRandomToken() {
 }
 
 async function checkUserEmail(req, res) {
-    const email = req.query.email; // Extract email from the query string
+    const email = req.query.email; 
 
     if (email) {
         try {
@@ -314,7 +314,7 @@ async function checkUserEmail(req, res) {
 
             if (user) {
                
-                return res.redirect('https://lexmoon.onrender.com/#home');
+                return res.redirect('https://lexmoon.onrender.com');
             } else {
            
                 return res.redirect('/indexbg.html');
@@ -323,13 +323,10 @@ async function checkUserEmail(req, res) {
             console.error("Error in checking email in MongoDB:", err);
             return res.redirect('/indexbg.html'); 
         }
-    } else {
-        
-        return res.redirect('/indexbg.html');
-    }
+    } 
 }
 
 app.get("/indexbg.html", checkUserEmail, (req, res) => {
    
-    res.sendFile(path.join(__dirname, 'public', 'indexbg.html'));
+    return res.redirect('https://lexmoon.onrender.com');
 });
