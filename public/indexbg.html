@@ -31,8 +31,8 @@
                     <form id="signupForm" class="form" action="/login" method="POST" >
                         <h1>Log In</h1>
                         <h4>Your Gateway Awaits</h4>
-                        <input type="email" id="loginEmail" name="email" placeholder="Email" required>
-                        <input type="password" id="loginPassword" name="password" placeholder="Password"  required>
+                        <input type="email" class="input-field23" id="loginEmail" name="email" placeholder="Email" oninput="this.value = this.value.toLowercase()" required>
+                        <input type="password" class="input-field23" id="loginPassword" name="password" placeholder="Password"  minlength="8"  required>
                         <a href="forgetpassword.html">Forget Your Password?</a>
                         <button type="submit">Sign In</button>
                         <h4>or</h4>
@@ -46,9 +46,9 @@
                     <form id="loginForm" class="form" action="/sign_up" method="POST" >
                         <h1>Create Account</h1>
                         <h4>Join Us Today</h4>
-                        <input type="text" id="name" name="name" placeholder="Name"  required>
-                        <input type="email" id="email" name="email" placeholder="Email"  required>
-                        <input type="password" id="password" name="password" placeholder="Password"  required>
+                        <input type="text" class="input-field23" id="name" name="name" placeholder="Name"  required>
+                        <input type="email" class="input-field23" id="email" name="email" placeholder="Email" oninput="this.value = this.value.toLowercase()" required>
+                        <input type="password" class="input-field23" id="password" name="password" placeholder="Password" minlength="8" required>
                        
                         <button type="submit" id="register1">Sign Up</button>
                         <h4>or</h4>
@@ -96,11 +96,11 @@
             <header>Login</header>
         </div>
         <div class="input-box23">
-            <input   type="text" class="input-field23" id="email" name="email" placeholder=" Email"  required>
+            <input   type="text" class="input-field23" id="email" name="email" placeholder=" Email" oninput="this.value = this.value.toLowercase()" required>
             <i class="bx bx-user"></i>
         </div>
         <div class="input-box23">
-            <input type="password" class="input-field23" id="password" name="password" placeholder="Password"  required>
+            <input type="password" class="input-field23" id="password" name="password" placeholder="Password" minlength="8"  required>
             <i class="bx bx-lock-alt"></i>
         </div>
         <div class="input-box23">
@@ -136,11 +136,11 @@
             </div>
         </div>
         <div class="input-box23">
-            <input type="text" class="input-field23" id="email" name="email" placeholder="Email"  required>
+            <input type="text" class="input-field23" id="email" name="email" placeholder="Email" oninput="this.value = this.value.toLowercase()"  required>
             <i class="bx bx-envelope"></i>
         </div>
         <div class="input-box23">
-            <input type="password" class="input-field23" id="password"  name="password" placeholder="Password"  required>
+            <input type="password" class="input-field23" id="password"  name="password" placeholder="Password" minlength="8"  required>
             <i class="bx bx-lock-alt"></i>
         </div>
         <div class="input-box23">
@@ -279,6 +279,8 @@ toggleButton2.addEventListener('click', () => {
       
         window.addEventListener('load', showElementOnLoad);
     </script>
+
+
     
     <script src="parallaxscroll.js"></script>
     <script src="login.js"></script>
