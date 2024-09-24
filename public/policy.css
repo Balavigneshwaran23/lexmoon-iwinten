@@ -25,9 +25,9 @@ html {
     margin-left: 50px;
     /* text glow */
    
-    font-weight: bold; /* Adjust font weight if needed */
+    font-weight: bold;
     color: #bbbbbb;
-    text-shadow: 0 0 10px #000000, /* Adjust the color and size of the glow */
+    text-shadow: 0 0 10px #000000, 
     0 0 20px #d2a253 ,
     0 0 30px #d2a253 ,
     0 0 40px #d2a253 ,
