@@ -61,8 +61,7 @@ passport.deserializeUser(async (id, done) => {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL:  "/auth/google/callback"
-
+    callbackURL: "/auth/google/callback"
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         let user = await User.findOne({ googleId: profile.id });
@@ -272,7 +271,7 @@ app.post("/reset_password", async (req, res) => {
 // Route for Google OAuth
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
-app.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: "/loginerror.html" }), (req, res) => {
+app.get("/auth/google/callback", passport.authenticate("google"), (req, res) => {
     res.redirect("https://lexmoon.streamlit.app/");
 });
 
