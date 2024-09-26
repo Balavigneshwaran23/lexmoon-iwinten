@@ -292,7 +292,7 @@ app.get("/", (req, res) => {
     res.redirect('/indexbg.html');
 });
 
-app.get("/error", (req, res) => {
+app.get("https://www.lexmoon.com/auth/google/callback?code=4%2F0AQlEd8zzdFWewFnB7C6d89BQPJOK4133WdcXINFP7rkvoWt7cALF6evGMR9o_FKMGbi05Q&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=4&prompt=consent ", (req, res) => {
     res.redirect('/indexbg.html');
 });
 
