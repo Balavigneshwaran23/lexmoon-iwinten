@@ -58,7 +58,6 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
-// Google OAuth strategy
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -66,8 +65,9 @@ passport.use(new GoogleStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         let user = await User.findOne({ googleId: profile.id });
+        
         if (!user) {
-            const email = (profile.emails && profile.emails.length > 0) ? profile.emails[0].value : 'No email available';
+            const email = profile.emails?.[0]?.value || 'No email available';
             user = new User({
                 googleId: profile.id,
                 name: profile.displayName,
@@ -75,10 +75,11 @@ passport.use(new GoogleStrategy({
             });
             await user.save();
         }
+        
         done(null, user);
     } catch (err) {
         console.error("Error in Google Strategy:", err);
-        done(err, null);
+        return done(err, false, { message: 'Internal server error during authentication' });
     }
 }));
 
