@@ -77,11 +77,13 @@ passport.use(new GoogleStrategy({
         }
         
         done(null, user);
-    } catch (err) {
+    }
+     catch (err) {
         console.error("Error in Google Strategy:", err);
         return done(err, false, { message: 'Internal server error during authentication' });
     }
-}));
+}
+));
 
 // Middleware to check if the user is authenticated
 function ensureAuthenticated(req, res, next) {
@@ -276,6 +278,7 @@ app.get("/auth/google/callback", passport.authenticate("google"), (req, res) => 
 });
 
 
+
 app.get("https://lexmoon.streamlit.app/", ensureAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'indexbg.html'));
 });
@@ -289,6 +292,9 @@ app.get("/", (req, res) => {
     res.redirect('/indexbg.html');
 });
 
+app.get("/error", (req, res) => {
+    res.redirect('/indexbg.html');
+});
 
 app.listen(3000, () => {
     console.log("Listening on PORT 3000");
