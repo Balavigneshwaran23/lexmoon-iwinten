@@ -121,7 +121,7 @@ app.post("/sign_up", async (req, res) => {
 
         await user.save();
         console.log("Record Inserted Successfully");
-        return res.redirect('https://resguru.ccbp.tech/');
+        return res.redirect('https://lexmoon.streamlit.app/');
     } catch (err) {
         console.error(err);
        
@@ -158,7 +158,7 @@ app.post("/login", async (req, res) => {
                 console.error(err);
                 return res.redirect('/loginerror.html');
             }
-            return res.redirect('https://resguru.ccbp.tech/');
+            return res.redirect('https://lexmoon.streamlit.app/');
         });
     } catch (err) {
         console.error(err);
@@ -274,12 +274,12 @@ app.post("/reset_password", async (req, res) => {
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 app.get("/auth/google/callback", passport.authenticate("google"), (req, res) => {
-    res.redirect("https://resguru.ccbp.tech/");
+    res.redirect("https://lexmoon.streamlit.app/");
 });
 
 
 
-app.get("https://resguru.ccbp.tech/", ensureAuthenticated, (req, res) => {
+app.get("https://lexmoon.streamlit.app/", ensureAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'indexbg.html'));
 });
 
@@ -292,7 +292,7 @@ app.get("/", (req, res) => {
     res.redirect('/indexbg.html');
 });
 
-app.get("https://www.lexmoon.com/auth/google/callback?code=4%2F0AQlEd8zzdFWewFnB7C6d89BQPJOK4133WdcXINFP7rkvoWt7cALF6evGMR9o_FKMGbi05Q&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=4&prompt=consent ", (req, res) => {
+app.get("https://www.lexmoon.com/auth/google/callback", (req, res) => {
     res.redirect('/indexbg.html');
 });
 
@@ -321,7 +321,7 @@ async function checkUserEmail(req, res) {
 
             if (user) {
                
-                return res.redirect('https://resguru.ccbp.tech/');
+                return res.redirect('https://lexmoon.streamlit.app/');
             } else {
            
                 return res.redirect('/indexbg.html');
