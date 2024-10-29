@@ -1,6 +1,6 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const User = require("../models/User1");
+const User = require("../models/User1.js");
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -23,7 +23,7 @@ passport.use(new GoogleStrategy({
     try {
         let user = await User.findOne({ googleId: profile.id });
         if (!user) {
-            const email = profile.emails?.[0]?.value || 'No email available';
+            const email = profile.emails?.[0]?.value || "No email available";
             user = new User({
                 googleId: profile.id,
                 name: profile.displayName,
@@ -34,8 +34,6 @@ passport.use(new GoogleStrategy({
         done(null, user);
     } catch (err) {
         console.error("Error in Google Strategy:", err);
-        return done(err, false, { message: 'Internal server error during authentication' });
+        return done(err, false, { message: "Internal server error during authentication" });
     }
 }));
-
-module.exports = passport;

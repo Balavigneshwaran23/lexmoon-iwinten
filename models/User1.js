@@ -6,7 +6,9 @@ const userSchema = new mongoose.Schema({
     password: String,
     resetToken: String,
     resetTokenExpiry: Date,
-    googleId: String
+    googleId: String,
 });
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;

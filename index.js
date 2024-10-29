@@ -1,38 +1,46 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 const session = require("express-session");
+const passport = require("passport");
 const dotenv = require("dotenv");
 const path = require("path");
-const mongoose = require("./config/mongoose");
-const passport = require("passport");
-require("./config/passport"); // Import Passport configuration
 
 dotenv.config();
+require("./config/passport-setup"); // Ensure this path is correct
+
+const authRoutes = require("./routes/authRoutes");
+const passwordRoutes = require("./routes/passwordRoutes");
+
 const app = express();
-const TOKEN_EXPIRATION = 3600000;
 
 // Middleware setup
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your-session-secret',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
-app.use("/auth", require("./routes/auth"));
-app.use("/user", require("./routes/user"));
+// MongoDB connection
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("Connected to Database"))
+    .catch(err => console.error("Error in Connecting to Database:", err));
 
-// Home route
+// Define routes
+app.use("/", authRoutes);
+app.use("/", passwordRoutes);
+
+// Route for the homepage
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'indexbg.html'));
+    res.sendFile(path.join(__dirname, "public", "indexbg.html"));
 });
 
-// Start server
+// Start the server
 app.listen(3000, () => {
     console.log("Listening on PORT 3000");
 });
