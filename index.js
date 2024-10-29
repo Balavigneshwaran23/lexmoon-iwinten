@@ -34,5 +34,5 @@ app.get("/", (req, res) => {
 
 // Start server
 app.listen(3000, () => {
-    console.log("Listening on PORT 250");
+    console.log("Listening on PORT 3000");
 });

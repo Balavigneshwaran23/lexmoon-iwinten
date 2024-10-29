@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
-const User = require("../models/User");
+const User = require("../models/User1");
 const { generateRandomToken } = require("../utils/generateToken");
 const router = express.Router();
 const TOKEN_EXPIRATION = 3600000;
