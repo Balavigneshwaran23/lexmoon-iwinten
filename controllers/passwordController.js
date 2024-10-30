@@ -19,7 +19,7 @@ exports.requestPasswordReset = async (req, res) => {
         const { email } = req.body;
         const user = await User.findOne({ email });
         if (!user) {
-            return res.redirect('/user_not_found.html');
+            return res.redirect('/User_not_found.html');
         }
 
         const resetToken = generateRandomToken();
