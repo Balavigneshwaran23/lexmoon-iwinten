@@ -1,6 +1,6 @@
 const express = require("express");
 const passport = require("passport");
-const session = require("express-session"); // Required for session management
+const session = require("express-session"); 
 const { signup, login, checkUserEmail } = require("../controllers/authController.js");
 
 const router = express.Router();
@@ -8,16 +8,16 @@ const router = express.Router();
 // Configure session middleware
 router.use(
     session({
-        secret: "your_secret_key", // Replace with a secure, random key
+        secret: "your_secret_key", 
         resave: false,
         saveUninitialized: false,
-        cookie: { secure: process.env.NODE_ENV === "production" } // Set to true in production
+        cookie: { secure: process.env.NODE_ENV === "production" } 
     })
 );
 
 // Initialize Passport middleware
 router.use(passport.initialize());
-router.use(passport.session()); // Enables persistent login sessions
+router.use(passport.session()); 
 
 // Authentication routes
 router.post("/sign_up", signup);
@@ -30,7 +30,7 @@ router.get("/auth/google", passport.authenticate("google", { scope: ["profile", 
 // Callback route for Google OAuth
 router.get(
     "/auth/google/callback",
-    passport.authenticate("google", { failureRedirect: "/login" }), // Redirect to /login on failure
+    passport.authenticate("google", { failureRedirect: "/login" }), 
     (req, res) => {
         res.redirect("https://lexmoon.streamlit.app/");
     }
@@ -38,8 +38,8 @@ router.get(
 
 // Error handling middleware
 router.use((err, req, res, next) => {
-    console.error("Internal Server Error:", err); // Logs error details to the console
-    res.status(500).json({ error: "Internal Server Error" }); // Sends a JSON error response
+    console.error("Internal Server Error:", err); 
+    res.status(500).json({ error: "Internal Server Error" }); 
 });
 
 module.exports = router;
