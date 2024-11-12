@@ -29,7 +29,7 @@ router.get("/auth/google", passport.authenticate("google", { scope: ["profile", 
 
 // Callback route for Google OAuth
 router.get(
-    "https://lexmoon.com/auth/google/callback",
+    "/auth/google/callback",
     passport.authenticate("google", { failureRedirect: "/login" }), 
     (req, res) => {
         res.redirect("https://lexmoon.streamlit.app/");
