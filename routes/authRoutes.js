@@ -37,9 +37,9 @@ router.get(
 );
 
 // Error handling middleware
-router.use((err, req, res, next) => {
-    console.error("Internal Server Error:", err); 
-    res.status(500).json({ error: "Internal Server Error" }); 
-});
+// router.use((err, req, res, next) => {
+//     console.error("Internal Server Error:", err); 
+//     res.status(500).json({ error: "Internal Server Error" }); 
+// });
 
 module.exports = router;
