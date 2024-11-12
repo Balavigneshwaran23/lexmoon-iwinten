@@ -38,6 +38,11 @@ app.use("/", passwordRoutes);
 // Route for the homepage
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "indexbg.html"));
+    res.render('indexbg.html', {
+        keywords: "law, legal translator, translation services, English to Tamil translation, legal documents translation, law-based translator, Tamil legal terminology, bilingual legal services",
+        description: "Discover our law-based translator specializing in English to Tamil translation. We provide accurate translations for legal documents, ensuring precise legal terminology and compliance with legal standards."
+    });
+
 });
 
 // Start the server
