@@ -14,23 +14,6 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="icon" type="x-icon" href="./iwimg/Vinoth_2_png Final.png ">
-    <script>
-        // Fetch meta data from the server and set meta tags dynamically
-        fetch('/meta')
-            .then(response => response.json())
-            .then(data => {
-                const descriptionMeta = document.createElement('meta');
-                descriptionMeta.name = "description";
-                descriptionMeta.content = data.description;
-                document.head.appendChild(descriptionMeta);
-
-                const keywordsMeta = document.createElement('meta');
-                keywordsMeta.name = "keywords";
-                keywordsMeta.content = data.keywords;
-                document.head.appendChild(keywordsMeta);
-            })
-            .catch(error => console.error('Error fetching meta data:', error));
-    </script>
 </head>
 <body>
     <div class="mainlogin2" id="mainlogin2">

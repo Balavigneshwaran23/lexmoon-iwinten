@@ -40,15 +40,6 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "indexbg.html"));
     
 });
-
-// API route to get meta information
-app.get("/meta", (req, res) => {
-    res.json({
-        description: "Discover our law-based translator specializing in English to Tamil translation. We provide accurate translations for legal documents, ensuring precise legal terminology and compliance with legal standards lexmoon.com.",
-        keywords: "law, lexmoon ai ,legal translator, translation services, English to Tamil translation, legal documents translation, law-based translator, Tamil legal terminology, bilingual legal services"
-    });
-});
-
 // Start the server
 app.listen(3000, () => {
     console.log("Listening on PORT 3000");
