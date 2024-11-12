@@ -25,7 +25,7 @@ router.post("/login", login);
 router.get("/check_email", checkUserEmail);
 
 // Google OAuth routes
-router.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+router.get("/auth/google/callback", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 // Callback route for Google OAuth
 router.get(
@@ -40,6 +40,7 @@ router.get(
 router.use((err, req, res, next) => {
     console.error("Internal Server Error: go back and try again", err); 
     // res.status(500).json({ error: "Internal Server Error " }); 
+    res.status(500).send("Internal Server Error go back and try again");
 });
 
 module.exports = router;
