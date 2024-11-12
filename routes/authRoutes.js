@@ -25,11 +25,11 @@ router.post("/login", login);
 router.get("/check_email", checkUserEmail);
 
 // Google OAuth routes
-router.get("/auth/google/callback", passport.authenticate("google", { scope: ["profile", "email"] }));
+router.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 // Callback route for Google OAuth
 router.get(
-    "/auth/google/callback",
+    "/auth/google",
     passport.authenticate("google", { failureRedirect: "/login" }), 
     (req, res) => {
         res.redirect("https://lexmoon.streamlit.app/");
