@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 const path = require("path");
 
 dotenv.config();
-require("./config/passport-setup"); // Ensure this path is correct
+require("./config/passport-setup"); 
 
 const authRoutes = require("./routes/authRoutes");
 const passwordRoutes = require("./routes/passwordRoutes");
