@@ -6,8 +6,8 @@ const passport = require("passport");
 const dotenv = require("dotenv");
 const path = require("path");
 
-dotenv.config(); // Load environment variables
-require("./config/passport-setup"); // Passport configuration
+dotenv.config();
+require("./config/passport-setup"); 
 
 const authRoutes = require("./routes/authRoutes");
 const passwordRoutes = require("./routes/passwordRoutes");
@@ -16,25 +16,20 @@ const app = express();
 
 // Middleware setup
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(path.join(__dirname, "view")));
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "your-session-secret",
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'your-session-secret',
     resave: false,
     saveUninitialized: true,
-  })
-);
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // MongoDB connection
-mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("Connected to Database"))
-  .catch((err) => console.error("Error in Connecting to Database:", err));
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("Connected to Database"))
+    .catch(err => console.error("Error in Connecting to Database:", err));
 
 // Define routes
 app.use("/", authRoutes);
@@ -42,27 +37,11 @@ app.use("/", passwordRoutes);
 
 // Route for the homepage
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "view", "indexbg.html"));
+    res.sendFile(path.join(__dirname, "public", "indexbg.html"));
+    
 });
-
-// 404 route (must be defined after all other routes)
-app.use((req, res) => {
-  res.status(404).send("<h1>404 - Page Not Found</h1>");
+// Start the server
+const port =3000;
+app.listen(port, () => {
+    console.log("Listening on PORT "+ port);
 });
-
-// Error-handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("<h1>500 - Internal Server Error</h1>");
-});
-
-// Export app for serverless environments
-module.exports = app;
-
-// Start server only in non-serverless environments
-if (require.main === module) {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`Server is running on PORT ${PORT}`);
-  });
-}
