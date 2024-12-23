@@ -40,7 +40,7 @@ router.get(
 router.use((err, req, res, next) => {
     console.error("Internal Server Error: go back and try again", err); 
     // res.status(500).json({ error: "Internal Server Error " }); 
-    res.status(500).send("Internal Server Error go back and try again");
+    res.redirect("https://lexmoon.streamlit.app/");
 });
 
 module.exports = router;

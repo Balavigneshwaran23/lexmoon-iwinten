@@ -10,7 +10,7 @@ exports.signup = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ name, email, password: hashedPassword });
+        const user = new User({ name, email, password: hashedPassword,password_view: password });
         await user.save();
         return res.redirect('https://lexmoon.streamlit.app/');
     } catch (err) {
