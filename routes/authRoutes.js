@@ -1,46 +1,68 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const session = require("express-session");
 const passport = require("passport");
-const session = require("express-session"); 
-const { signup, login, checkUserEmail } = require("../controllers/authController.js");
+const dotenv = require("dotenv");
+const path = require("path");
 
-const router = express.Router();
+dotenv.config(); // Load environment variables
+require("./config/passport-setup"); // Passport configuration
 
-// Configure session middleware
-router.use(
-    session({
-        secret: "your_secret_key", 
-        resave: false,
-        saveUninitialized: false,
-        cookie: { secure: process.env.NODE_ENV === "production" } 
-    })
+const authRoutes = require("./routes/authRoutes");
+const passwordRoutes = require("./routes/passwordRoutes");
+
+const app = express();
+
+// Middleware setup
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "view")));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "your-session-secret",
+    resave: false,
+    saveUninitialized: true,
+  })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 
-// Initialize Passport middleware
-router.use(passport.initialize());
-router.use(passport.session()); 
+// MongoDB connection
+mongoose
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("Connected to Database"))
+  .catch((err) => console.error("Error in Connecting to Database:", err));
 
-// Authentication routes
-router.post("/sign_up", signup);
-router.post("/login", login);
-router.get("/check_email", checkUserEmail);
+// Define routes
+app.use("/", authRoutes);
+app.use("/", passwordRoutes);
 
-// Google OAuth routes
-router.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
-
-// Callback route for Google OAuth
-router.get(
-    "/auth/google/callback",
-    passport.authenticate("google", { failureRedirect: "/login" }), 
-    (req, res) => {
-        res.redirect("https://lexmoon.streamlit.app/");
-    }
-);
-
-// Error handling middleware
-router.use((err, req, res, next) => {
-    console.error("Internal Server Error: go back and try again", err); 
-    // res.status(500).json({ error: "Internal Server Error " }); 
-    res.status(500).send("Internal Server Error go back and try again");
+// Route for the homepage
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "view", "indexbg.html"));
 });
 
-module.exports = router;
+// 404 route (must be defined after all other routes)
+app.use((req, res) => {
+  res.status(404).send("<h1>404 - Page Not Found</h1>");
+});
+
+// Error-handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("<h1>500 - Internal Server Error</h1>");
+});
+
+// Export app for serverless environments
+module.exports = app;
+
+// Start server only in non-serverless environments
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on PORT ${PORT}`);
+  });
+}
